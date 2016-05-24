@@ -77,6 +77,7 @@ $(document).on('click','.node',function(){
         bound = $(this);
         $(this).css('border-color','blue');
         $(this).css('border-width','4px');
+        $('#chooseTarget').show();
     }
     else
     {
@@ -90,12 +91,21 @@ $(document).on('click','.node',function(){
         bound.css('border-color', 'black');
         bound.css('border-width','1px');
         bound = null;
+        $('#chooseTarget').hide();
     }
 })
 
 
 var addOrRemoveEdge = function(node1, node2, elem1, elem2)
 {
+    if(node1 == node2)
+        return false;
+    if(node1 > node2)
+    {
+        var tmp = node1;
+        node1 = node2;
+        node2 = tmp;
+    }
     for(i = 0; i<edges.length; i++)
     {
         if(edges[i].node1 && edges[i].node2 && ((edges[i].node1 == node1  && edges[i].node2 == node2) || edges[i].node2 == node1  && edges[i].node1 == node2))
@@ -111,8 +121,12 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
     return true;
 }
 
-
-$('.loadPartial').click(function(){
-    var partial = $(this).attr('partial');
-    $('#main').load(partial);
-});
+$('#output').click(function(){
+    $('#case').html('');
+    $('#case').append("<h4>Input: </h4>")
+    $('#case').append(nodes+" "+edges.length+"<br>");
+    for(i = 0; i<edges.length; i++)
+    {
+        $('#case').append(edges[i].node1+" "+edges[i].node2+"<br>");
+    }
+})
