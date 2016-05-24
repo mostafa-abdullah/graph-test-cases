@@ -23,22 +23,37 @@ function drag_over(event)
 
 
 var nodes = 5;
+var base = 0;
 
 $('#generate').click(function(){
-    nodes = $('#nodes').val();
     var graph = $('#graph');
-    $('#graph').html('');
+    graph.html('');
+
+    nodes = $('#nodes').val();
+    if(!nodes || nodes<=0)
+        nodes = 5;
+
+    base = $("input[type='radio'][name='base']:checked").val();
+    
+
+    var start = 0;
+    
+    if(base && base == '1')
+        start++;
+    var end = parseInt(start) + parseInt(nodes) - 1;
+     
+    
     var grWidth = graph.width();
     var grHeight = graph.height();
     var radius = grWidth/2-25;
 
     var angleDiff = Math.PI*2 / nodes;
-    for(i = 0; i<nodes; i++)
+    for(i = start; i<=end; i++)
     {
 
         var xPos = radius + Math.cos(i*angleDiff)*radius/1.4;
         var yPos = radius + Math.sin(i*angleDiff)*radius/1.4;
         var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)">'+i+'</div>';
-        $('#graph').append(newNode);
+        graph.append(newNode);
     }
 });

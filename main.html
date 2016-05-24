@@ -13,6 +13,9 @@
 		
 	</div>
 	<br>
+	<input type="radio" name="base" value="0"> Zero based
+	<input type="radio" name="base" value="1"> One based
+	<br>
 	<label for="nodes">Number of Nodes: </label>
 	<input type="number" id="nodes" min="1" max="20">
 	<br>
@@ -37,6 +40,11 @@
       text-align: center;
       vertical-align: middle;
       font-size: 20px;
+    }
+
+    .node:hover{
+    	border-color: red;
+    	border-width: 2px;
     }
     </style>
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
