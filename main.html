@@ -31,21 +31,26 @@
     }
     .node
     { 
-      position:  absolute;
-      width: 50px; 
-      height: 50px;
-      cursor: move;
-      border: 1px solid black;
-      border-radius: 100px;
-      text-align: center;
-      vertical-align: middle;
-      font-size: 20px;
+		position:  absolute;
+		width: 50px; 
+		height: 50px;
+		cursor: move;
+		border: 1px solid black;
+		border-radius: 100px;
+		text-align: center;
+		vertical-align: middle;
+		font-size: 20px;
+		background-color: white;
+		z-index: 10;
     }
 
     .node:hover{
-    	border-color: red;
-    	border-width: 2px;
+    	border-color: red !important;
+    	border-width: 2px !important;
     }
     </style>
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+  <script src="jsPlumb-2.1.2.js"></script>
   <script src="main.js"></script>
+
+  

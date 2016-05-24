@@ -24,6 +24,7 @@ function drag_over(event)
 
 var nodes = 5;
 var base = 0;
+var edges = [];
 
 $('#generate').click(function(){
     var graph = $('#graph');
@@ -53,7 +54,49 @@ $('#generate').click(function(){
 
         var xPos = radius + Math.cos(i*angleDiff)*radius/1.4;
         var yPos = radius + Math.sin(i*angleDiff)*radius/1.4;
-        var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)">'+i+'</div>';
+        var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)" node="'+i+'">'+i+'</div>';
         graph.append(newNode);
     }
 });
+
+var bound = null
+
+$(document).on('click','.node',function(){
+    if(!bound)
+    {
+        bound = $(this);
+        $(this).css('border-color','blue');
+        $(this).css('border-width','4px');
+    }
+    else
+    {
+
+        var node1 = bound.attr('node');
+        var node2 = $(this).attr('node');
+        
+        var added = addOrRemoveEdge(node1,node2, bound, $(this));
+            
+
+        bound.css('border-color', 'black');
+        bound.css('border-width','1px');
+        bound = null;
+    }
+})
+
+
+var addOrRemoveEdge = function(node1, node2, elem1, elem2)
+{
+    for(i = 0; i<edges.length; i++)
+    {
+        if(edges[i].node1 && edges[i].node2 && ((edges[i].node1 == node1  && edges[i].node2 == node2) || edges[i].node2 == node1  && edges[i].node1 == node2))
+        {
+            jsPlumb.detach(edges[i].conn);
+            edges.splice(i,1);
+            return false;
+        }
+    }
+
+    var connection = jsPlumb.connect({source:elem1, target:elem2, connector:'Straight', anchor:'Center'});
+    edges.push({node1 : node1, node2: node2, conn: connection});
+    return true;
+}
