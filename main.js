@@ -22,11 +22,12 @@ function drag_over(event)
 } 
 
 
-var nodes = 10;
+var nodes = 5;
 
 $('#generate').click(function(){
-    
+    nodes = $('#nodes').val();
     var graph = $('#graph');
+    $('#graph').html('');
     var grWidth = graph.width();
     var grHeight = graph.height();
     var radius = grWidth/2-25;
@@ -34,6 +35,7 @@ $('#generate').click(function(){
     var angleDiff = Math.PI*2 / nodes;
     for(i = 0; i<nodes; i++)
     {
+
         var xPos = radius + Math.cos(i*angleDiff)*radius/1.4;
         var yPos = radius + Math.sin(i*angleDiff)*radius/1.4;
         var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)">'+i+'</div>';
