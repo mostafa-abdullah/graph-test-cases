@@ -9,48 +9,69 @@
     
   </head>
   <body>
-	<div id="graph" ondragover="drag_over(event)" ondrop="drop(event)">
+  <div id="sidenavCont">
+  	<h3>Graph Test Case Generator</h3>
+  	<hr>
+  	<ul id="sidenav">
+  		<li><a href="#">Generate Case</a></li>
+  		<li><a href="howitworks.html">How it works</a></li>
+  		<li><a href="http://github.com" target="_blank">Source code</a></li>  		
+  	</ul>
+  	<span style="position: absolute; bottom: 15px; font-size: 12px;">Mostafa Abdullah <br> All rights reserved</span>
+  </div>
+  <div id="main">
+
+  		
+	  <div id="inputarea">
+	  	<table>
+  			<tr>
+  				<th>No. of nodes: </th>
+  				<td><input type="number" id="nodes" min="1" max="20" value="5"></td>
+  			</tr>
+  			<tr>
+  				<th>Base index: </th>
+  				<td>
+  					<input type="radio" name="base" value="0" checked> Zero based<br>
+					<input type="radio" name="base" value="1"> One based
+  				</td>
+  			</tr>
+  			<tr>
+  				<td><input type="button" id="generate" value="Generate Graph"></td>
+  				<td><input type="button" id="output" value="Generate Case"></td>
+  			</tr>
+  		</table>
+	  	
 		
+	  	
+	  	
+		
+
+		
+		<br>
+		
+	  </div>
+	  
+	  <div id="grapharea">
+	  	<div id="graph" ondragover="drag_over(event)" ondrop="drop(event)">
+			
+		</div>
+	  </div>
+	  
+  </div>
+  <div id="case">
+	  	
 	</div>
-	<br>
-	<input type="radio" name="base" value="0"> Zero based
-	<input type="radio" name="base" value="1"> One based
-	<br>
-	<label for="nodes">Number of Nodes: </label>
-	<input type="number" id="nodes" min="1" max="20">
-	<br>
-	<input type="button" id="generate" value="Generate Graph">
+
+
+
+
   </body>
 
-
- <style>
-    #graph{
-    	width: 500px;
-    	height: 500px;
-    	border: 1px solid black;
-    }
-    .node
-    { 
-		position:  absolute;
-		width: 50px; 
-		height: 50px;
-		cursor: move;
-		border: 1px solid black;
-		border-radius: 100px;
-		text-align: center;
-		vertical-align: middle;
-		font-size: 20px;
-		background-color: white;
-		z-index: 10;
-    }
-
-    .node:hover{
-    	border-color: red !important;
-    	border-width: 2px !important;
-    }
-    </style>
+ 
+ 	
+    <link href="style.css" rel="stylesheet">
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
   <script src="jsPlumb-2.1.2.js"></script>
   <script src="main.js"></script>
-
+</html>
   

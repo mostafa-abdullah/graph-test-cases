@@ -11,6 +11,7 @@ function drop(event)
     var dm = document.getElementById(offset[2]);
     dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
     dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';
+    jsPlumb.empty("#graph");
     event.preventDefault();
     return false;
 }
@@ -28,13 +29,19 @@ var edges = [];
 
 $('#generate').click(function(){
     var graph = $('#graph');
+    jsPlumb.empty("graph");
     graph.html('');
 
+
+
+
+    edges = [];
     nodes = $('#nodes').val();
     if(!nodes || nodes<=0)
         nodes = 5;
 
     base = $("input[type='radio'][name='base']:checked").val();
+    
     
 
     var start = 0;
@@ -47,16 +54,19 @@ $('#generate').click(function(){
     var grWidth = graph.width();
     var grHeight = graph.height();
     var radius = grWidth/2-25;
-
+    var grX = graph.position().left;
+    var grY = graph.position().top;
     var angleDiff = Math.PI*2 / nodes;
     for(i = start; i<=end; i++)
     {
 
-        var xPos = radius + Math.cos(i*angleDiff)*radius/1.4;
-        var yPos = radius + Math.sin(i*angleDiff)*radius/1.4;
+        var xPos = grX + radius + Math.cos(i*angleDiff)*radius/1.4;
+        var yPos = grY + radius + Math.sin(i*angleDiff)*radius/1.4;
         var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)" node="'+i+'">'+i+'</div>';
         graph.append(newNode);
     }
+
+    $('#output').show();
 });
 
 var bound = null
@@ -100,3 +110,9 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
     edges.push({node1 : node1, node2: node2, conn: connection});
     return true;
 }
+
+
+$('.loadPartial').click(function(){
+    var partial = $(this).attr('partial');
+    $('#main').load(partial);
+});
