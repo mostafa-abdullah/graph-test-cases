@@ -131,7 +131,7 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
 
 
     }
-    console.log("here")
+    
     var connection = jsPlumb.connect({
         source:elem1,
         target:elem2,
