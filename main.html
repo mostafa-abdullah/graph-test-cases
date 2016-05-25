@@ -6,7 +6,7 @@
     <meta name="keywords" content="graph algorithm test cases">
     <title>Graph Test Cases</title>
 
-    
+
   </head>
   <body>
   <div id="sidenavCont">
@@ -15,13 +15,13 @@
   	<ul id="sidenav">
   		<li><a href="#">Generate Case</a></li>
   		<li><a href="howitworks.html">How it works</a></li>
-  		<li><a href="http://github.com" target="_blank">Source code</a></li>  		
+  		<li><a href="http://github.com" target="_blank">Source code</a></li>
   	</ul>
   	<span style="position: absolute; bottom: 15px; font-size: 12px;">Mostafa Abdullah <br> All rights reserved</span>
   </div>
   <div id="main">
 
-  		
+
 	  <div id="inputarea">
 	  	<table>
   			<tr>
@@ -35,32 +35,39 @@
 					<input type="radio" name="base" value="1"> One based
   				</td>
   			</tr>
+            <tr>
+  				<th>Graph type: </th>
+  				<td>
+  					<input type="radio" name="gtype" value="0" checked> Undirected<br>
+					<input type="radio" name="gtype" value="1"> Directed
+  				</td>
+  			</tr>
   			<tr>
   				<td><input type="button" id="generate" value="Generate Graph"></td>
   				<td><input type="button" id="output" value="Generate Case"></td>
   			</tr>
   		</table>
-	  	
-		
-	  	
-	  	
-		
 
-		
+
+
+
+
+
+
 		<br>
-		
+
 	  </div>
-	  
+
 	  <div id="grapharea">
 		<span id="chooseTarget"style="position: absolute; color:gray; display: none;">Choose target node</span>
 	  	<div id="graph" ondragover="drag_over(event)" ondrop="drop(event)">
-			
+
 		</div>
 	  </div>
-	  
+
   </div>
   <div id="case">
-	  	
+
 	</div>
 
 
@@ -68,11 +75,10 @@
 
   </body>
 
- 
- 	
+
+
     <link href="style.css" rel="stylesheet">
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
   <script src="jsPlumb-2.1.2.js"></script>
   <script src="main.js"></script>
 </html>
-  
