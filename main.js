@@ -1,11 +1,11 @@
- function drag_start(event) 
+ function drag_start(event)
 {
     var style = window.getComputedStyle(event.target, null);
     var str = (parseInt(style.getPropertyValue("left")) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY)+ ',' + event.target.id;
     event.dataTransfer.setData("Text",str);
-} 
+}
 
-function drop(event) 
+function drop(event)
 {
     var offset = event.dataTransfer.getData("Text").split(',');
     var dm = document.getElementById(offset[2]);
@@ -20,12 +20,13 @@ function drag_over(event)
 {
     event.preventDefault();
     return false;
-} 
+}
 
 
 var nodes = 5;
 var base = 0;
 var edges = [];
+var isDirected = false;
 
 $('#generate').click(function(){
     var graph = $('#graph');
@@ -36,21 +37,24 @@ $('#generate').click(function(){
 
 
     edges = [];
+    isDirected = false;
     nodes = $('#nodes').val();
     if(!nodes || nodes<=0)
         nodes = 5;
 
     base = $("input[type='radio'][name='base']:checked").val();
-    
-    
+
+    var graphType = $("input[type='radio'][name='gtype']:checked").val();
+    isDirected = graphType == 0 ? false : true;
+
 
     var start = 0;
-    
+
     if(base && base == '1')
         start++;
     var end = parseInt(start) + parseInt(nodes) - 1;
-     
-    
+
+
     var grWidth = graph.width();
     var grHeight = graph.height();
     var radius = grWidth/2-25;
@@ -84,9 +88,9 @@ $(document).on('click','.node',function(){
 
         var node1 = bound.attr('node');
         var node2 = $(this).attr('node');
-        
+
         var added = addOrRemoveEdge(node1,node2, bound, $(this));
-            
+
 
         bound.css('border-color', 'black');
         bound.css('border-width','1px');
@@ -98,25 +102,43 @@ $(document).on('click','.node',function(){
 
 var addOrRemoveEdge = function(node1, node2, elem1, elem2)
 {
+
+    var connector = 'Straight';
     if(node1 == node2)
-        return false;
-    if(node1 > node2)
     {
-        var tmp = node1;
-        node1 = node2;
-        node2 = tmp;
+        if(isDirected) // self loop: (draw curve)
+            connector = ['StateMachine', { curviness:20 }];
+        else
+            return false;
     }
+
     for(i = 0; i<edges.length; i++)
     {
-        if(edges[i].node1 && edges[i].node2 && ((edges[i].node1 == node1  && edges[i].node2 == node2) || edges[i].node2 == node1  && edges[i].node1 == node2))
+        // if the edge exist delete edge
+        if(edges[i].node1 && edges[i].node2
+           && ((edges[i].node1 == node1  && edges[i].node2 == node2)
+               || (!isDirected && edges[i].node1 == node2  && edges[i].node2 == node1)))
         {
             jsPlumb.detach(edges[i].conn);
             edges.splice(i,1);
             return false;
         }
-    }
+        else if (isDirected && edges[i].node1 == node2  && edges[i].node2 == node1)
+        {
+            // directed graph and the edge exist in the opposite direction: (draw edge as curve)
+            connector = ['StateMachine', { curviness:20 }];
+        }
 
-    var connection = jsPlumb.connect({source:elem1, target:elem2, connector:'Straight', anchor:'Center'});
+
+    }
+    
+    var connection = jsPlumb.connect({
+        source:elem1,
+        target:elem2,
+        connector: connector,
+        anchor:'Center',
+        overlays: isDirected ? [["Arrow" , { width:12, length:12, location:0.67 }]] : [],
+    });
     edges.push({node1 : node1, node2: node2, conn: connection});
     return true;
 }
