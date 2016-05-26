@@ -11,7 +11,7 @@ How it works
 4. To add an edge, click on the first node then click on the second node.
 5. To delete an edge, follow the same above step.
 
-    _**Note: **_ in Case of directed grpahs you have to click on the source node then on the destination node (in order).
+    _**Note:**_ in Case of directed grpahs you have to click on the source node then on the destination node (in order).
 
 6. The test case follows the typical format in all graph problems:
    - The first line consists on two integers, (n) & (m), where (n) is the number of nodes and (m) is the number of edges.
