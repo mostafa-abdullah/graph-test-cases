@@ -101,15 +101,8 @@ $(document).on('click','.node',function(){
 
 var addOrRemoveEdge = function(node1, node2, elem1, elem2)
 {
-
-    var connector = 'Straight';
-    if(node1 == node2)
-    {
-        if(isDirected) // self loop: (draw curve)
-            connector = ['StateMachine', { curviness:20 }];
-        else
+    if(node1 == node2 && !isDirected)
             return false;
-    }
 
     for(i = 0; i<edges.length; i++)
     {
@@ -125,6 +118,7 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
         }
     }
 
+    var connector = 'Straight';
     if (isDirected) // draw edge as curve
     {
         connector = ['StateMachine', { curviness:20 }];
