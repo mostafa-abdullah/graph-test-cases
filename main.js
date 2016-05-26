@@ -120,16 +120,16 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
         {
             jsPlumb.detach(edges[i].conn);
             edges.splice(i,1);
-            outputTestCase()();  // update the output testCases
+            outputTestCase();  // update the output testCases
             return false;
         }
-        else if (isDirected && edges[i].node1 == node2  && edges[i].node2 == node1)
-        {
-            // directed graph and the edge exist in the opposite direction: (draw edge as curve)
-            connector = ['StateMachine', { curviness:20 }];
-        }
+    }
 
-
+    if (isDirected) // draw edge as curve
+    {
+        connector = ['StateMachine', { curviness:20 }];
+        if(node2  < node1)
+            connector = ['StateMachine', { curviness:-20 }];
     }
 
     var connection = jsPlumb.connect({
