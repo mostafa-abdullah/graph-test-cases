@@ -69,8 +69,7 @@ $('#generate').click(function(){
         var newNode = '<div style="left:'+xPos+'px; top:'+yPos+'px;" id="node'+i+'" class="node" draggable="true" ondragstart="drag_start(event)" node="'+i+'">'+i+'</div>';
         graph.append(newNode);
     }
-
-    $('#output').show();
+    outputTestCase();
 });
 
 var bound = null
@@ -102,15 +101,8 @@ $(document).on('click','.node',function(){
 
 var addOrRemoveEdge = function(node1, node2, elem1, elem2)
 {
-
-    var connector = 'Straight';
-    if(node1 == node2)
-    {
-        if(isDirected) // self loop: (draw curve)
-            connector = ['StateMachine', { curviness:20 }];
-        else
+    if(node1 == node2 && !isDirected)
             return false;
-    }
 
     for(i = 0; i<edges.length; i++)
     {
@@ -121,17 +113,19 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
         {
             jsPlumb.detach(edges[i].conn);
             edges.splice(i,1);
+            outputTestCase();  // update the output testCases
             return false;
         }
-        else if (isDirected && edges[i].node1 == node2  && edges[i].node2 == node1)
-        {
-            // directed graph and the edge exist in the opposite direction: (draw edge as curve)
-            connector = ['StateMachine', { curviness:20 }];
-        }
-
-
     }
-    
+
+    var connector = 'Straight';
+    if (isDirected) // draw edge as curve
+    {
+        connector = ['StateMachine', { curviness:20 }];
+        if(node2  < node1)
+            connector = ['StateMachine', { curviness:-20 }];
+    }
+
     var connection = jsPlumb.connect({
         source:elem1,
         target:elem2,
@@ -140,10 +134,12 @@ var addOrRemoveEdge = function(node1, node2, elem1, elem2)
         overlays: isDirected ? [["Arrow" , { width:12, length:12, location:0.67 }]] : [],
     });
     edges.push({node1 : node1, node2: node2, conn: connection});
+    outputTestCase(); // update the output testCases
     return true;
 }
 
-$('#output').click(function(){
+function outputTestCase()
+{
     $('#case').html('');
     $('#case').append("<h4>Input: </h4>")
     $('#case').append(nodes+" "+edges.length+"<br>");
@@ -151,4 +147,4 @@ $('#output').click(function(){
     {
         $('#case').append(edges[i].node1+" "+edges[i].node2+"<br>");
     }
-})
+}
